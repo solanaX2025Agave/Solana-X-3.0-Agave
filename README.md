@@ -1,82 +1,88 @@
-# Mobile Wallet Adapter
+# Solana-X-3.0-Agave
 
+**The Next-Gen Layer 3 Blockchain 2.0 Stack for Mobile-Native Web3**
 
+Welcome to **[Solana-X-3.0-Agave](https://github.com/solanaX2025Agave/Solana-X-3.0-Agave)** — the official GitHub hub for the **Mobile-Native Web3**, reimagined for the **Layer 3 Blockchain 2.0** era. Built on Solana’s ultra-high-performance foundation, this repository powers **seamless, secure, and mobile-first dApp experiences** with **zero-friction wallet connectivity**.
 
-## See our [documentation website](https://docs.solanamobile.com/) for:
-- [General Development Setup](https://docs.solanamobile.com/getting-started/development-setup)
-- React Native
-    - [Setup](https://docs.solanamobile.com/react-native/setup)
-    - [Quickstart](https://docs.solanamobile.com/react-native/quickstart)
-    - [Solana Mobile Stack Overview](https://docs.solanamobile.com/getting-started/overview)
-- Android
-    - [Setup](https://docs.solanamobile.com/android-native/setup)
-    - [Quickstart](https://docs.solanamobile.com/android-native/quickstart)
-- Unity
-    - [Overview](https://docs.solanamobile.com/unity/unity_sdk)
-- [Sample Apps](https://docs.solanamobile.com/sample-apps/sample_app_overview)
+---
 
+## [Documentation Website](https://docs.solanamobile.com/)
+
+| Category | Resources |
+|--------|---------|
+| **General** | [Development Setup](https://docs.solanamobile.com/getting-started/development-setup) |
+| **React Native** | [Setup](https://docs.solanamobile.com/react-native/setup) • [Quickstart](https://docs.solanamobile.com/react-native/quickstart) • [Stack Overview](https://docs.solanamobile.com/getting-started/overview) |
+| **Android** | [Setup](https://docs.solanamobile.com/android-native/setup) • [Quickstart](https://docs.solanamobile.com/android-native/quickstart) |
+| **Unity** | [SDK Overview](https://docs.solanamobile.com/unity/unity_sdk) |
+| **Samples** | [Sample Apps](https://docs.solanamobile.com/sample-apps/sample_app_overview) |
+
+---
 
 ## Summary
 
-The Mobile Wallet Adapter specification, Android and JavaScript reference implementations, a demo wallet and dapps, and related documentation.
+The **Mobile Wallet Adapter specification**, **Android & JavaScript reference implementations**, **demo wallet and dapps**, and **comprehensive documentation** — all in one connected ecosystem.
 
-## Target audience
+> **Enabling Layer 3 Blockchain 2.0 interactions** via secure, standardized mobile wallet protocols.
 
-This repository is intended for consumption by Solana mobile developers.
+---
 
-## What's included
+## Target Audience
 
-- The [Mobile Wallet Adapter protocol specification](https://solana-mobile.github.io/mobile-wallet-adapter/spec/spec.html)
-- An [integration guide](android/docs/integration_guide.md) for Android wallets and dapps
-- An Android library for [wallets](android/walletlib) to provide Mobile Wallet Adapter transaction signing services to dapps
-- An Android library for [dapps](android/clientlib) to consume Mobile Wallet Adapter transaction signing services
-- A [fake wallet](android/fakewallet) and a [fake dapp](android/fakedapp) demonstrating how to integrate walletlib and clientlib
-- A JavaScript [reference implementation](js/packages/mobile-wallet-adapter-protocol) of the Mobile Wallet Adapter protocol
-- A JavaScript [convenience wrapper](js/packages/mobile-wallet-adapter-protocol-web3js) that lets you use familiar datatypes from `@solana/web3.js` as inputs to the Mobile Wallet Adapter protocol.
-- A JavaScript [mobile wallet adapter plugin](js/packages/wallet-adapter-mobile) for use with the [Solana wallet adapter](https://github.com/solana-labs/wallet-adapter)
-- An [example web app](examples/example-web-app) that demonstrates how to use the mobile wallet adapter plugin to sign messages and send transactions
-- An [example React Native app](examples/example-react-native-app) that demonstrates how to use the Mobile Wallet Adapter protocol to interact with a mobile wallet
+This repository is crafted for **Solana mobile developers** building the future of **decentralized mobile applications** on **Layer 3 Blockchain 2.0** infrastructure.
 
-## How to build
+---
 
-All Android projects within this repository can be built using [Android Studio](https://developer.android.com/studio)
+## What's Included
 
-Documentation site:
-- [General Development Setup](https://docs.solanamobile.com/getting-started/development-setup)
+| Component | Description | Link |
+|---------|-------------|------|
+| **MWA Protocol Spec** | The standard for mobile-to-dapp communication | [View Spec](https://solana-mobile.github.io/mobile-wallet-adapter/spec/spec.html) |
+| **Android Integration Guide** | For wallets & dapps | [Read Guide](android/docs/integration_guide.md) |
+| **Wallet Library** | Provide signing services | [walletlib](android/walletlib) |
+| **dApp Client Library** | Consume signing services | [clientlib](android/clientlib) |
+| **Fake Wallet & dApp** | Instant integration testing | [fakewallet](android/fakewallet) • [fakedapp](android/fakedapp) |
+| **JS Reference Impl** | Core protocol in JavaScript | [mobile-wallet-adapter-protocol](js/packages/mobile-wallet-adapter-protocol) |
+| **web3.js Wrapper** | Use familiar `@solana/web3.js` types | [wrapper](js/packages/mobile-wallet-adapter-protocol-web3js) |
+| **Wallet Adapter Plugin** | Plug-and-play with [Solana Wallet Adapter](https://github.com/solana-labs/wallet-adapter) | [plugin](js/packages/wallet-adapter-mobile) |
+| **Example Web App** | Sign messages & send transactions | [example-web-app](examples/example-web-app) |
+| **Example React Native App** | Full mobile wallet interaction flow | [example-react-native-app](examples/example-react-native-app) |
 
-### How to reference these libraries in your project
+---
 
-#### For dApps:
+## How to Build
 
-For a more thorough setup guide, see our documentation site:
-- Android:
-    - [Setup](https://docs.solanamobile.com/android-native/setup)
-- React Native:
-    - [Setup](https://docs.solanamobile.com/react-native/setup)
+All Android projects build seamlessly with **[Android Studio](https://developer.android.com/studio)**
 
-Java
-```
+[General Development Setup](https://docs.solanamobile.com/getting-started/development-setup)
+
+---
+
+## Add to Your Project
+
+### For **dApps**
+
+| Platform | Setup Guide |
+|--------|------------|
+| Android | [Setup](https://docs.solanamobile.com/android-native/setup) |
+| React Native | [Setup](https://docs.solanamobile.com/react-native/setup) |
+
+#### **Java**
+groovy
 dependencies {
     implementation 'com.solanamobile:mobile-wallet-adapter-clientlib:2.0.7'
 }
-```
-
-Kotlin
-```
 dependencies {
     implementation 'com.solanamobile:mobile-wallet-adapter-clientlib-ktx:2.0.7'
 }
-```
-
-#### For wallets:
-
-```
 dependencies {
     implementation 'com.solanamobile:mobile-wallet-adapter-walletlib:2.0.7'
 }
-```
 
-## Get involved
+##Get Involved
+Contributions welcome!
+Powering the Mobile Layer 3 Blockchain 2.0 Revolution — One secure transaction at a time.
 
-Contributions are welcome! Go ahead and file Issues, open Pull Requests, or join us on our [Discord](https://discord.gg/solanamobile) to discuss this SDK.
-"# Solana-X-3.0-Agave" 
+#SolanaX #Layer3 #Blockchain2.0 #MobileWeb3 #Agave
+ies {
+    implementation 'com.solanamobile:mobile-wallet-adapter-clientlib:2.0.7'
+}
