@@ -1,13 +1,6 @@
 # Mobile Wallet Adapter
 
-[![Release (latest by date)](https://img.shields.io/github/v/release/solana-mobile/mobile-wallet-adapter)](https://github.com/solana-mobile/mobile-wallet-adapter/releases/latest)
-[![Android CI](https://github.com/solana-mobile/mobile-wallet-adapter/actions/workflows/android.yml/badge.svg)](https://github.com/solana-mobile/mobile-wallet-adapter/actions/workflows/android.yml)
-[![Sample App: clientlib-ktx](https://github.com/solana-mobile/mobile-wallet-adapter/actions/workflows/example-ktx.yml/badge.svg)](https://github.com/solana-mobile/mobile-wallet-adapter/actions/workflows/example-ktx.yml)
-[![Specification CI](https://github.com/solana-mobile/mobile-wallet-adapter/actions/workflows/spec.yml/badge.svg)](https://github.com/solana-mobile/mobile-wallet-adapter/actions/workflows/spec.yml)
 
-_Part of the [Solana Mobile Stack](https://github.com/solana-mobile/solana-mobile-stack-sdk)_
-
-Join us on [Discord](https://discord.gg/solanamobile)
 
 ## See our [documentation website](https://docs.solanamobile.com/) for:
 - [General Development Setup](https://docs.solanamobile.com/getting-started/development-setup)
