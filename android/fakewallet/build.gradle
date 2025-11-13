@@ -1,0 +1,130 @@
+/*
+ * Copyright (c) 2022 Solana Mobile Inc.
+ */
+
+plugins {
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.android
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace = "com.solana.mobilewalletadapter.fakewallet"
+
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.solana.mobilewalletadapter.fakewallet"
+        minSdk 23
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
+
+    signingConfigs {
+        create("release") {
+            // APK signing keystore configuration provided by environment variables:
+            //  ORG_GRADLE_PROJECT_apkSigningKeystorePath
+            //  ORG_GRADLE_PROJECT_apkSigningKeystorePassword
+            //  ORG_GRADLE_PROJECT_apkSigningKeyAlias
+            //  ORG_GRADLE_PROJECT_apkSigningKeyPassword
+            final var storePath = findProperty("apkSigningKeystorePath")
+            if (storePath != null) {
+                storeFile = file(storePath)
+            }
+            storePassword = findProperty("apkSigningKeystorePassword")
+            keyAlias = findProperty("apkSigningKeyAlias")
+            keyPassword = findProperty("apkSigningKeyPassword")
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            final var releaseSigningConfig = signingConfigs["release"]
+            if (releaseSigningConfig.storeFile != null && releaseSigningConfig.storeFile.exists()) {
+                signingConfig = releaseSigningConfig
+            }
+        }
+    }
+
+    flavorDimensions = ["protocol_version"]
+
+    productFlavors {
+        v1 {
+            dimension "protocol_version"
+            buildConfigField "com.solana.mobilewalletadapter.common.protocol.SessionProperties.ProtocolVersion",
+                    "PROTOCOL_VERSION", "com.solana.mobilewalletadapter.common.protocol.SessionProperties.ProtocolVersion.V1"
+        }
+        legacy {
+            dimension "protocol_version"
+            resValue "string", "app_name", "Fake Wallet App (Legacy)"
+            buildConfigField "com.solana.mobilewalletadapter.common.protocol.SessionProperties.ProtocolVersion",
+                    "PROTOCOL_VERSION", "com.solana.mobilewalletadapter.common.protocol.SessionProperties.ProtocolVersion.LEGACY"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+    
+    packagingOptions {
+        exclude 'META-INF/versions/9/OSGI-INF/MANIFEST.MF'
+    }
+}
+
+dependencies {
+    androidTestImplementation libs.androidx.test.runner
+    androidTestUtil libs.androidx.test.orchestrator
+
+    androidTestImplementation libs.kotlin.stdlib
+    androidTestImplementation libs.androidx.test.core
+    androidTestImplementation libs.core.ktx
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.junit.ktx
+    androidTestImplementation libs.androidx.test.runner
+    androidTestImplementation libs.androidx.test.rules
+    androidTestImplementation libs.androidx.test.espresso.core
+    androidTestImplementation libs.androidx.test.uiautomator
+    androidTestImplementation libs.java.websocket
+    androidTestImplementation libs.web3.solana
+    androidTestImplementation project(path: ':clientlib')
+
+    annotationProcessor libs.androidx.room.compiler
+    implementation libs.androidx.activity.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.lifecycle.runtime.ktx
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+    implementation libs.androidx.navigation.fragment.ktx
+    implementation libs.androidx.room.runtime
+    implementation libs.androidx.room.ktx
+    implementation libs.material
+    implementation libs.digital.asset.links.android
+    implementation libs.coil
+    implementation libs.coil.svg
+    implementation libs.bcprov.jdk18on
+    implementation libs.kotlinx.coroutines.android
+    implementation libs.multimult
+    implementation libs.zxing.android.embedded
+    implementation project(path: ':walletlib')
+    kapt libs.androidx.room.compiler
+}

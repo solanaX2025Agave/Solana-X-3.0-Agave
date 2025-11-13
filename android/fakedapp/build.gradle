@@ -1,0 +1,99 @@
+/*
+ * Copyright (c) 2022 Solana Mobile Inc.
+ */
+
+plugins {
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.android
+}
+
+android {
+    namespace = "com.solana.mobilewalletadapter.fakedapp"
+
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.solana.mobilewalletadapter.fakedapp"
+        minSdk 23
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        create("release") {
+            // APK signing keystore configuration provided by environment variables:
+            //  ORG_GRADLE_PROJECT_apkSigningKeystorePath
+            //  ORG_GRADLE_PROJECT_apkSigningKeystorePassword
+            //  ORG_GRADLE_PROJECT_apkSigningKeyAlias
+            //  ORG_GRADLE_PROJECT_apkSigningKeyPassword
+            final var storePath = findProperty("apkSigningKeystorePath")
+            if (storePath != null) {
+                storeFile = file(storePath)
+            }
+            storePassword = findProperty("apkSigningKeystorePassword")
+            keyAlias = findProperty("apkSigningKeyAlias")
+            keyPassword = findProperty("apkSigningKeyPassword")
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            final var releaseSigningConfig = signingConfigs["release"]
+            if (releaseSigningConfig.storeFile != null && releaseSigningConfig.storeFile.exists()) {
+                signingConfig = releaseSigningConfig
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+    
+    packagingOptions {
+        exclude 'META-INF/versions/9/OSGI-INF/MANIFEST.MF'
+    }
+}
+
+dependencies {
+    implementation project(path: ':clientlib')
+
+    implementation libs.androidx.activity.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.lifecycle.runtime.ktx
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+    implementation libs.material
+    implementation libs.bcprov.jdk18on
+    implementation libs.kotlinx.coroutines.android
+
+    // Testing-only dependencies
+    androidTestImplementation libs.kotlin.stdlib
+    androidTestImplementation libs.androidx.test.core
+    androidTestImplementation libs.core.ktx
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.junit.ktx
+    androidTestImplementation libs.androidx.test.runner
+    androidTestImplementation libs.androidx.test.espresso.core
+    androidTestImplementation libs.androidx.test.uiautomator
+
+    testImplementation libs.androidx.test.core
+    testImplementation libs.androidx.junit
+    testImplementation libs.junit
+    testImplementation libs.androidx.test.espresso.core
+    testImplementation libs.androidx.test.espresso.intents
+    testImplementation libs.androidx.test.truth
+}

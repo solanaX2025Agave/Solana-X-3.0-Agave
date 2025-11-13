@@ -1,0 +1,87 @@
+name: React Native Smoke Test
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ '.github/**', 'js/**' ]
+  pull_request:
+    branches: [ main ]
+    paths: [ '.github/**', 'js/**' ]
+  release:
+    types: [ published ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [ 69, 79, 80, latest]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: yarn
+          cache-dependency-path: 'js/yarn.lock'
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: 'Build Project'
+        working-directory: 'js/'
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+
+      - name: 'Setup React Native App'
+        working-directory: 'js/'
+        run: |
+          if [ "${{ matrix.version }}" = "latest" ]; then
+            npx @react-native-community/cli@latest init React${{ matrix.version }}App
+          else
+            npx @react-native-community/cli@latest init React${{ matrix.version }}App --version 0.${{ matrix.version }}.0
+          fi
+
+      - name: 'Install mobile-wallet-adapter-protocol'
+        working-directory: 'js/'
+        run: |
+          cd React${{ matrix.version }}App
+          npm install file:../packages/mobile-wallet-adapter-protocol
+          
+      - name: 'Build React Native App'
+        working-directory: 'js/'
+        run: |
+          cd React${{ matrix.version }}App/android
+          ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: 'Setup React Native Wallet'
+        working-directory: 'js/'
+        run: |
+          if [ "${{ matrix.version }}" = "latest" ]; then
+            npx @react-native-community/cli@latest init React${{ matrix.version }}Wallet
+          else
+            npx @react-native-community/cli@latest init React${{ matrix.version }}Wallet --version 0.${{ matrix.version }}.0
+          fi
+
+      - name: 'Install mobile-wallet-adapter-walletlib'
+        working-directory: 'js/'
+        run: |
+          cd React${{ matrix.version }}Wallet
+          npm install file:../packages/mobile-wallet-adapter-walletlib
+          
+      - name: 'Build React Native Wallet'
+        working-directory: 'js/'
+        run: |
+          cd React${{ matrix.version }}Wallet/android
+          ./gradlew assembleDebug --no-daemon --stacktrace
